@@ -5,6 +5,11 @@
             <h1 class="text-4xl font-bold text-brew-brown mb-2">Order Management</h1>
             <p class="text-lg text-brew-dark-brown">View and manage customer orders</p>
         </div>
+        @if (session()->has('orderStatusMessage'))
+            <div class="mb-6 bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-md shadow-sm">
+                {{ session('orderStatusMessage') }}
+            </div>
+        @endif
             <!-- Search and Filter -->
             <div class="bg-white rounded-lg border border-brew-light-brown shadow-sm mb-8">
                 <div class="p-6">
@@ -43,11 +48,12 @@
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Items</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Update Status</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
                         @forelse ($orders as $order)
-                            <tr>
+                            <tr wire:key="order-{{ $order->order_id }}">
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#{{ $order->order_id }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                     {{ $order->customer->name ?? 'N/A' }}
@@ -64,10 +70,25 @@
                                 <td class="px-6 py-4 text-sm text-gray-500">
                                     {{ $order->orderItems->count() }} item(s)
                                 </td>
+                                        <td class="px-6 py-4 text-sm text-gray-900">
+                                            <div class="flex items-center gap-3">
+                                                <select
+                                                    class="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-brew-brown focus:border-brew-brown"
+                                                    wire:change="updateStatus({{ $order->order_id }}, $event.target.value)"
+                                                >
+                                                    @foreach ($statusOptions as $statusOption)
+                                                        <option value="{{ $statusOption }}" @selected($order->status === $statusOption)>
+                                                            {{ ucfirst($statusOption) }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span wire:loading wire:target="updateStatus" class="text-xs text-gray-500">Updating...</span>
+                                            </div>
+                                        </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="px-6 py-4 text-center text-sm text-gray-500">No orders found.</td>
+                                        <td colspan="7" class="px-6 py-4 text-center text-sm text-gray-500">No orders found.</td>
                             </tr>
                         @endforelse
                     </tbody>

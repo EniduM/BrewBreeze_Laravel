@@ -94,7 +94,7 @@
                     </div>
                 @else
                     <div class="flex items-center gap-4">
-                        <a href="{{ route('customer.login') }}" class="px-6 py-2.5 bg-transparent border-2 border-white text-white hover:bg-white hover:text-brew-brown transition-all rounded-full font-sans font-medium text-sm uppercase tracking-wide shadow-lg">
+                        <a href="{{ route('login') }}" class="px-6 py-2.5 bg-transparent border-2 border-white text-white hover:bg-white hover:text-brew-brown transition-all rounded-full font-sans font-medium text-sm uppercase tracking-wide shadow-lg">
                             Login
                         </a>
                         <a href="{{ route('register') }}" class="px-6 py-2.5 bg-brew-light-brown text-white hover:bg-brew-orange transition-all rounded-full font-sans font-medium text-sm uppercase tracking-wide shadow-xl">

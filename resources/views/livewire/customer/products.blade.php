@@ -233,7 +233,7 @@
                                class="flex-1 text-center px-4 py-3 border-2 border-brew-light-brown text-brew-brown rounded-xl hover:bg-brew-light-brown hover:text-white hover:shadow-lg transition-all duration-300 text-sm font-semibold">
                                 View Details
                             </a>
-                            <a href="{{ route('customer.login') }}" 
+                            <a href="{{ route('login') }}" 
                                class="flex-1 px-4 py-3 bg-brew-light-brown hover:bg-brew-orange text-white rounded-xl transition-all duration-300 text-sm font-semibold text-center hover:shadow-lg">
                                 Login to Order
                             </a>

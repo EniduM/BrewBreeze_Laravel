@@ -83,7 +83,7 @@
 
                 <!-- Form Card -->
                 <div class="glass-card rounded-2xl shadow-2xl p-8 border border-brew-light-brown/20 animate-fade-in-up" style="animation-delay: 0.3s;">
-                    <form class="space-y-6" method="POST" action="{{ route('customer.login.post') }}">
+                    <form class="space-y-6" method="POST" action="{{ route('login.post') }}">
                         @csrf
 
                         <x-validation-errors class="mb-4" />

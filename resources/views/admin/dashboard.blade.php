@@ -18,17 +18,11 @@
         .font-display { font-family: 'Playfair Display', serif; }
         .font-sans { font-family: 'Inter', sans-serif; }
         body {
-            background: linear-gradient(to bottom, #ffffff 0%, #fef7f0 20%, #ffffff 40%, #fef7f0 60%, #ffffff 80%, #fef7f0 100%);
-            background-attachment: fixed;
+            background: #fdf7f2;
         }
     </style>
 </head>
 <body class="antialiased overflow-x-hidden">
-    <x-header />
-    
-    <!-- Gradient Transition -->
-    <div class="w-full h-16" style="background: linear-gradient(to bottom, #3B2A2A 0%, rgba(59, 42, 42, 0.9) 20%, rgba(59, 42, 42, 0.7) 40%, rgba(59, 42, 42, 0.4) 60%, rgba(59, 42, 42, 0.2) 80%, transparent 100%);"></div>
-
     <main class="min-h-screen pb-12">
         @livewire('admin.dashboard')
     </main>

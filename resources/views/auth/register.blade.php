@@ -146,7 +146,7 @@
                         <div class="text-center space-y-3 animate-fade-in" style="animation-delay: 1s;">
                             <p class="text-sm text-gray-900 font-sans font-medium">
                                 Already have an account? 
-                                <a href="{{ route('customer.login') }}" class="font-bold text-gray-900 hover:text-brew-orange transition-colors underline">Sign In</a>
+                                <a href="{{ route('login') }}" class="font-bold text-gray-900 hover:text-brew-orange transition-colors underline">Sign In</a>
                             </p>
                             <p class="text-sm">
                                 <a href="{{ route('landing') }}" class="font-semibold text-gray-900 hover:text-brew-orange transition-colors inline-flex items-center gap-1">

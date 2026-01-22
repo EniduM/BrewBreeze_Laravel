@@ -186,7 +186,7 @@
                                 @endif
                             @endif
                         @else
-                            <a href="{{ route('customer.login') }}" 
+                            <a href="{{ route('login') }}" 
                                class="block w-full px-6 py-4 bg-brew-light-brown hover:bg-brew-orange text-brew-white font-bold text-lg rounded-xl transition-all duration-200 shadow-md hover:shadow-lg text-center">
                                 Login to Order
                             </a>
