@@ -340,51 +340,68 @@
                 const video2 = document.querySelector('.video-2');
                 const video3 = document.querySelector('.video-3');
 
-                // Reset all to small size and side positions
+                // Reset all to small size first
                 [video1, video2, video3].forEach(card => {
                     if (card) {
-                        card.classList.remove('w-80', 'h-80', 'md:w-[450px]', 'md:h-[450px]', 'z-30');
-                        card.classList.add('w-64', 'h-64', 'md:w-80', 'md:h-80', 'z-10');
+                        card.classList.remove('w-80', 'h-80', 'md:w-[450px]', 'md:h-[450px]', 'z-30', 'rounded-3xl', 'border-[6px]');
+                        card.classList.add('w-64', 'h-64', 'md:w-80', 'md:h-80', 'z-10', 'rounded-2xl', 'border-4');
+                        card.querySelector('div').classList.remove('rounded-3xl', 'border-[6px]');
+                        card.querySelector('div').classList.add('rounded-2xl', 'border-4');
                     }
                 });
 
-                // Position based on which slide is active
+                // Position based on which slide is active (carousel rotation)
                 if (n === 1) {
-                    // Video 1 in center
+                    // Video 1 in center, video 3 on left, video 2 on right
+                    video3.style.left = '0';
+                    video3.style.right = 'auto';
+                    video3.style.transform = 'translateX(0)';
+                    
                     video1.style.left = '50%';
+                    video1.style.right = 'auto';
                     video1.style.transform = 'translateX(-50%)';
-                    video1.classList.remove('w-64', 'h-64', 'md:w-80', 'md:h-80', 'z-10');
-                    video1.classList.add('w-80', 'h-80', 'md:w-[450px]', 'md:h-[450px]', 'z-30');
+                    video1.classList.remove('w-64', 'h-64', 'md:w-80', 'md:h-80', 'z-10', 'rounded-2xl', 'border-4');
+                    video1.classList.add('w-80', 'h-80', 'md:w-[450px]', 'md:h-[450px]', 'z-30', 'rounded-3xl', 'border-[6px]');
+                    video1.querySelector('div').classList.remove('rounded-2xl', 'border-4');
+                    video1.querySelector('div').classList.add('rounded-3xl', 'border-[6px]');
                     
-                    video2.style.left = '0';
+                    video2.style.left = 'auto';
+                    video2.style.right = '0';
                     video2.style.transform = 'translateX(0)';
-                    
-                    video3.style.left = '100%';
-                    video3.style.transform = 'translateX(-100%)';
                 } else if (n === 2) {
-                    // Video 2 in center
+                    // Video 2 in center, video 1 on left, video 3 on right
                     video1.style.left = '0';
+                    video1.style.right = 'auto';
                     video1.style.transform = 'translateX(0)';
                     
                     video2.style.left = '50%';
+                    video2.style.right = 'auto';
                     video2.style.transform = 'translateX(-50%)';
-                    video2.classList.remove('w-64', 'h-64', 'md:w-80', 'md:h-80', 'z-10');
-                    video2.classList.add('w-80', 'h-80', 'md:w-[450px]', 'md:h-[450px]', 'z-30');
+                    video2.classList.remove('w-64', 'h-64', 'md:w-80', 'md:h-80', 'z-10', 'rounded-2xl', 'border-4');
+                    video2.classList.add('w-80', 'h-80', 'md:w-[450px]', 'md:h-[450px]', 'z-30', 'rounded-3xl', 'border-[6px]');
+                    video2.querySelector('div').classList.remove('rounded-2xl', 'border-4');
+                    video2.querySelector('div').classList.add('rounded-3xl', 'border-[6px]');
                     
-                    video3.style.left = '100%';
-                    video3.style.transform = 'translateX(-100%)';
+                    video3.style.left = 'auto';
+                    video3.style.right = '0';
+                    video3.style.transform = 'translateX(0)';
                 } else if (n === 3) {
-                    // Video 3 in center
-                    video1.style.left = '0';
-                    video1.style.transform = 'translateX(0)';
-                    
+                    // Video 3 in center, video 2 on left, video 1 on right
                     video2.style.left = '0';
+                    video2.style.right = 'auto';
                     video2.style.transform = 'translateX(0)';
                     
                     video3.style.left = '50%';
+                    video3.style.right = 'auto';
                     video3.style.transform = 'translateX(-50%)';
-                    video3.classList.remove('w-64', 'h-64', 'md:w-80', 'md:h-80', 'z-10');
-                    video3.classList.add('w-80', 'h-80', 'md:w-[450px]', 'md:h-[450px]', 'z-30');
+                    video3.classList.remove('w-64', 'h-64', 'md:w-80', 'md:h-80', 'z-10', 'rounded-2xl', 'border-4');
+                    video3.classList.add('w-80', 'h-80', 'md:w-[450px]', 'md:h-[450px]', 'z-30', 'rounded-3xl', 'border-[6px]');
+                    video3.querySelector('div').classList.remove('rounded-2xl', 'border-4');
+                    video3.querySelector('div').classList.add('rounded-3xl', 'border-[6px]');
+                    
+                    video1.style.left = 'auto';
+                    video1.style.right = '0';
+                    video1.style.transform = 'translateX(0)';
                 }
 
                 // Update indicators
