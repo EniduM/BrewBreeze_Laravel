@@ -39,8 +39,10 @@ Route::prefix('v1')->group(function () {
             ->middleware('ability:customer');
 
         // Orders - requires customer scope
+        Route::get('/orders', [OrderController::class, 'index']);
         Route::post('/orders', [OrderController::class, 'store'])
             ->middleware('ability:customer');
+        Route::get('/orders/{order}', [OrderController::class, 'show']);
 
         // Subscriptions - requires customer scope
         Route::get('/subscriptions', [SubscriptionController::class, 'index'])
@@ -76,7 +78,9 @@ Route::middleware(['auth:sanctum', 'throttle:100,1'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/products', [ProductController::class, 'index']);
     Route::post('/cart', [CartController::class, 'store'])->middleware('ability:customer');
+    Route::get('/orders', [OrderController::class, 'index']);
     Route::post('/orders', [OrderController::class, 'store'])->middleware('ability:customer');
+    Route::get('/orders/{order}', [OrderController::class, 'show']);
     Route::get('/subscriptions', [SubscriptionController::class, 'index'])->middleware('ability:customer');
     Route::post('/subscriptions', [SubscriptionController::class, 'store'])->middleware('ability:customer');
     Route::delete('/subscriptions/{subscription}', [SubscriptionController::class, 'destroy'])->middleware('ability:customer');

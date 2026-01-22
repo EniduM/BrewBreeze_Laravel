@@ -50,9 +50,22 @@ class AuthController extends Controller
 
     /**
      * Logout user and revoke token.
+     * 
+     * This method ensures proper token invalidation by:
+     * 1. Using currentAccessToken() - gets the exact token used for this request
+     * 2. Calling delete() - permanently removes token from database (personal_access_tokens table)
+     * 3. Once deleted, any future requests with this token will fail with 401 Unauthenticated
+     * 4. Other tokens issued to this user or other users remain valid
+     * 
+     * Why this works:
+     * - Sanctum validates tokens by checking the database on every request
+     * - If token doesn't exist in DB, authentication fails
+     * - delete() is Sanctum's recommended method (vs revoke() which is for Passport)
      */
     public function logout(Request $request): JsonResponse
     {
+        // Delete the current access token from the database
+        // This immediately invalidates the token - subsequent requests will get 401
         $request->user()->currentAccessToken()->delete();
 
         return response()->json([

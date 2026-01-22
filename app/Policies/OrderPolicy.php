@@ -22,7 +22,13 @@ class OrderPolicy
     public function view(User $user, Order $order): bool
     {
         // Admins can view any order, customers can only view their own orders
-        return $user->isAdmin() || $user->id === $order->customer_id;
+        if ($user->isAdmin()) {
+            return true;
+        }
+
+        // For customers, get their customer ID and compare
+        $customer = $user->getOrCreateCustomer();
+        return $customer && $customer->customer_id === $order->customer_id;
     }
 
     /**
