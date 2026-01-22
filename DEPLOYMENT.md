@@ -463,6 +463,54 @@ tar -czf backup_files_$(date +%Y%m%d).tar.gz storage/
 
 ---
 
+## Production Readiness Checklist
+
+- [ ] Database migrations run and tested
+- [ ] All environment variables configured
+- [ ] SSL certificate installed and valid
+- [ ] Backup strategy implemented
+- [ ] Monitoring/logging configured (Sentry optional)
+- [ ] Rate limiting active on auth endpoints
+- [ ] CORS configured for API (if needed)
+- [ ] Cron jobs scheduled (if applicable)
+- [ ] Redis configured for caching
+- [ ] Logs stored outside web root
+
+## Health Check Endpoint
+
+Monitor application health:
+```bash
+curl https://your-domain.com/health
+# Response: 200 OK if healthy
+```
+
+## Caching Strategy
+
+- **Config:** `php artisan config:cache`
+- **Routes:** `php artisan route:cache`
+- **Views:** `php artisan view:cache`
+- **Redis:** Configure for session/cache store in production
+
+## Backup & Recovery
+
+```bash
+# Database backup (cron job):
+0 2 * * * mysqldump -u user -p password database > /backups/db-$(date +\%Y\%m\%d).sql
+
+# Storage backup:
+0 3 * * * tar -czf /backups/storage-$(date +\%Y\%m\%d).tar.gz storage/
+```
+
+## Performance Optimization
+
+1. **Database Indexes:** Check migrations for composite indexes
+2. **Query Optimization:** Use `withDetails()` scope for eager loading
+3. **Caching:** Redis for cache, session, and rate limiting
+4. **Asset Compilation:** Run `npm run build` before deployment
+5. **Opcache:** Enable PHP opcache on production
+
+---
+
 ## Support
 
 For deployment support, please contact the development team or refer to:
