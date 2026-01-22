@@ -12,6 +12,7 @@ class Orders extends Component
 
     public $search = '';
     public $statusFilter = '';
+    public array $statusOptions = ['pending', 'paid', 'cancelled'];
 
     protected $paginationTheme = 'tailwind';
 
@@ -23,6 +24,21 @@ class Orders extends Component
     public function updatingStatusFilter()
     {
         $this->resetPage();
+    }
+
+    public function updateStatus(int $orderId, string $status): void
+    {
+        $status = strtolower($status);
+
+        if (! in_array($status, $this->statusOptions, true)) {
+            $this->addError('status', 'Invalid status selected.');
+            return;
+        }
+
+        $order = Order::findOrFail($orderId);
+        $order->update(['status' => $status]);
+
+        session()->flash('orderStatusMessage', "Order #{$order->order_id} updated to " . ucfirst($status) . '.');
     }
 
     public function render()
