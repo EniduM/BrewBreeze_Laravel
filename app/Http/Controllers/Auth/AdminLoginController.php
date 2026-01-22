@@ -61,8 +61,7 @@ class AdminLoginController extends Controller
             ]);
         }
 
-        // Use our custom LoginResponse for redirect
-        $loginResponse = app(LoginResponse::class);
-        return $loginResponse->toResponse($request);
+        // Redirect straight to admin dashboard after successful login
+        return redirect()->route('admin.dashboard');
     }
 }

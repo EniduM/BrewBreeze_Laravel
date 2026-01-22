@@ -61,8 +61,7 @@ class CustomerLoginController extends Controller
             ]);
         }
 
-        // Use our custom LoginResponse for redirect
-        $loginResponse = app(LoginResponse::class);
-        return $loginResponse->toResponse($request);
+        // Redirect straight to landing page after successful login
+        return redirect()->route('landing');
     }
 }

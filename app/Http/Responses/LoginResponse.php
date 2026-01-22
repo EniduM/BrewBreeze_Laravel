@@ -26,7 +26,7 @@ class LoginResponse implements LoginResponseContract
         if ($user && $user->isAdmin()) {
             // Validate that they used admin login route
             if ($loginRoute === 'admin' || $request->route()->getName() === 'admin.login.post') {
-                return redirect()->intended(route('admin.dashboard'));
+                return redirect()->route('admin.dashboard');
             } else {
                 // Admin trying to use customer login - logout and redirect to admin login
                 auth()->logout();
@@ -41,20 +41,20 @@ class LoginResponse implements LoginResponseContract
         // If user is customer, redirect to customer dashboard
         if ($user && $user->isCustomer()) {
             // Validate that they used customer login route
-            if ($loginRoute === 'customer' || $request->route()->getName() === 'customer.login.post' || !$request->route()->getName()) {
-                return redirect()->intended(route('dashboard'));
+            if ($loginRoute === 'customer' || $request->route()->getName() === 'login.post' || !$request->route()->getName()) {
+                return redirect()->route('dashboard');
             } else {
                 // Customer trying to use admin login - logout and redirect to customer login
                 auth()->logout();
                 $request->session()->invalidate();
                 $request->session()->regenerateToken();
-                return redirect()->route('customer.login')->withErrors([
+                return redirect()->route('login')->withErrors([
                     'email' => 'Please use the customer login page.'
                 ]);
             }
         }
         
         // Default redirect
-        return redirect()->intended(route('dashboard'));
+                return redirect()->route('dashboard');
     }
 }

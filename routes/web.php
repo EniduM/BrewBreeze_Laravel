@@ -13,10 +13,10 @@ Route::get('/about', function () {
 })->name('about');
 
 // Customer Login Routes
-Route::get('/login', [CustomerLoginController::class, 'showLoginForm'])->name('customer.login');
+Route::get('/login', [CustomerLoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [CustomerLoginController::class, 'store'])
     ->middleware(['web', 'throttle:login'])
-    ->name('customer.login.post');
+    ->name('login.post');
 
 // Admin Login Routes
 Route::get('/admin/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
