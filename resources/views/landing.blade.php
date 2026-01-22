@@ -102,6 +102,64 @@
             </div>
         </div>
 
+        <!-- Video Carousel Section -->
+        <div class="bg-gradient-to-b from-white via-brew-cream/5 to-brew-cream/10 py-20 px-6 md:px-12">
+            <div class="max-w-6xl mx-auto">
+                <div class="relative group">
+                    <!-- Carousel Container -->
+                    <div class="relative w-full overflow-hidden rounded-2xl shadow-2xl" style="aspect-ratio: 16/9;">
+                        <!-- Videos Wrapper -->
+                        <div class="carousel-wrapper relative w-full h-full">
+                            <!-- Video 1 -->
+                            <div class="carousel-slide absolute inset-0 opacity-0 transition-opacity duration-1000 ease-in-out" id="slide-1">
+                                <video class="w-full h-full object-cover" autoplay muted loop playsinline>
+                                    <source src="{{ asset('images/video 1.mp4') }}" type="video/mp4">
+                                </video>
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+                            </div>
+                            
+                            <!-- Video 2 -->
+                            <div class="carousel-slide absolute inset-0 opacity-0 transition-opacity duration-1000 ease-in-out" id="slide-2">
+                                <video class="w-full h-full object-cover" autoplay muted loop playsinline>
+                                    <source src="{{ asset('images/video 2.mp4') }}" type="video/mp4">
+                                </video>
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+                            </div>
+                            
+                            <!-- Video 3 -->
+                            <div class="carousel-slide absolute inset-0 opacity-0 transition-opacity duration-1000 ease-in-out" id="slide-3">
+                                <video class="w-full h-full object-cover" autoplay muted loop playsinline>
+                                    <source src="{{ asset('images/video 3.mp4') }}" type="video/mp4">
+                                </video>
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+                            </div>
+                        </div>
+
+                        <!-- Carousel Controls - Left Arrow -->
+                        <button onclick="previousSlide()" class="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-white/80 hover:bg-white text-brew-brown p-3 rounded-full transition-all hover:scale-110 shadow-lg backdrop-blur-sm">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                            </svg>
+                        </button>
+
+                        <!-- Carousel Controls - Right Arrow -->
+                        <button onclick="nextSlide()" class="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white/80 hover:bg-white text-brew-brown p-3 rounded-full transition-all hover:scale-110 shadow-lg backdrop-blur-sm">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </button>
+
+                        <!-- Carousel Indicators -->
+                        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-3">
+                            <button onclick="goToSlide(1)" class="carousel-indicator w-3 h-3 rounded-full bg-white/60 hover:bg-white transition-all cursor-pointer active" data-slide="1"></button>
+                            <button onclick="goToSlide(2)" class="carousel-indicator w-3 h-3 rounded-full bg-white/60 hover:bg-white transition-all cursor-pointer" data-slide="2"></button>
+                            <button onclick="goToSlide(3)" class="carousel-indicator w-3 h-3 rounded-full bg-white/60 hover:bg-white transition-all cursor-pointer" data-slide="3"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Coffee Menu Preview Section -->
         <div id="menu" class="bg-gradient-to-b from-brew-cream/5 via-brew-cream/10 to-brew-cream/5 py-20 px-6 md:px-12">
             <div class="max-w-6xl mx-auto">
@@ -253,7 +311,81 @@
                 animation: fade-in-up 1s ease-out;
                 animation-fill-mode: both;
             }
+
+            /* Carousel Styles */
+            .carousel-slide.active {
+                @apply opacity-100;
+            }
+
+            .carousel-indicator.active {
+                @apply bg-white w-4 scale-125;
+            }
         </style>
+
+        <script>
+            let currentSlide = 1;
+            const totalSlides = 3;
+            let carouselAutoPlay;
+
+            function showSlide(n) {
+                // Remove active class from all slides and indicators
+                document.querySelectorAll('.carousel-slide').forEach(slide => {
+                    slide.classList.remove('active');
+                });
+                document.querySelectorAll('.carousel-indicator').forEach(indicator => {
+                    indicator.classList.remove('active');
+                });
+
+                // Add active class to current slide and indicator
+                document.getElementById(`slide-${n}`).classList.add('active');
+                document.querySelector(`.carousel-indicator[data-slide="${n}"]`).classList.add('active');
+            }
+
+            function nextSlide() {
+                currentSlide = (currentSlide % totalSlides) + 1;
+                showSlide(currentSlide);
+                resetAutoPlay();
+            }
+
+            function previousSlide() {
+                currentSlide = ((currentSlide - 2 + totalSlides) % totalSlides) + 1;
+                showSlide(currentSlide);
+                resetAutoPlay();
+            }
+
+            function goToSlide(n) {
+                currentSlide = n;
+                showSlide(currentSlide);
+                resetAutoPlay();
+            }
+
+            function autoPlayCarousel() {
+                nextSlide();
+            }
+
+            function resetAutoPlay() {
+                clearInterval(carouselAutoPlay);
+                carouselAutoPlay = setInterval(autoPlayCarousel, 5000);
+            }
+
+            // Initialize carousel
+            document.addEventListener('DOMContentLoaded', function() {
+                showSlide(currentSlide);
+                carouselAutoPlay = setInterval(autoPlayCarousel, 5000);
+            });
+
+            // Pause autoplay on hover
+            const carouselContainer = document.querySelector('.carousel-wrapper');
+            if (carouselContainer) {
+                carouselContainer.addEventListener('mouseenter', function() {
+                    clearInterval(carouselAutoPlay);
+                });
+
+                carouselContainer.addEventListener('mouseleave', function() {
+                    carouselAutoPlay = setInterval(autoPlayCarousel, 5000);
+                });
+            }
+        </script>
 
     <!-- Call to Action Section -->
     <section class="py-16 text-white" style="background-color: #4A3535;">
