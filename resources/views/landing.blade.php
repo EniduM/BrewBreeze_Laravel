@@ -103,58 +103,78 @@
         </div>
 
         <!-- Video Carousel Section -->
-        <div class="bg-gradient-to-b from-white via-brew-cream/5 to-brew-cream/10 py-20 px-6 md:px-12">
-            <div class="max-w-6xl mx-auto">
-                <div class="relative group">
-                    <!-- Carousel Container -->
-                    <div class="relative w-full overflow-hidden rounded-2xl shadow-2xl" style="aspect-ratio: 16/9;">
-                        <!-- Videos Wrapper -->
-                        <div class="carousel-wrapper relative w-full h-full">
-                            <!-- Video 1 -->
-                            <div class="carousel-slide absolute inset-0 opacity-0 transition-opacity duration-1000 ease-in-out" id="slide-1">
-                                <video class="w-full h-full object-cover" autoplay muted loop playsinline>
-                                    <source src="{{ asset('images/video 1.mp4') }}" type="video/mp4">
-                                </video>
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-                            </div>
-                            
-                            <!-- Video 2 -->
-                            <div class="carousel-slide absolute inset-0 opacity-0 transition-opacity duration-1000 ease-in-out" id="slide-2">
-                                <video class="w-full h-full object-cover" autoplay muted loop playsinline>
-                                    <source src="{{ asset('images/video 2.mp4') }}" type="video/mp4">
-                                </video>
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-                            </div>
-                            
-                            <!-- Video 3 -->
-                            <div class="carousel-slide absolute inset-0 opacity-0 transition-opacity duration-1000 ease-in-out" id="slide-3">
-                                <video class="w-full h-full object-cover" autoplay muted loop playsinline>
-                                    <source src="{{ asset('images/video 3.mp4') }}" type="video/mp4">
-                                </video>
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+        <div class="bg-gradient-to-b from-white via-brew-cream/5 to-brew-cream/10 py-20 px-6 md:px-12 overflow-hidden">
+            <div class="max-w-7xl mx-auto">
+                <!-- Text Label -->
+                <div class="text-center mb-12">
+                    <h2 class="font-display text-3xl md:text-5xl text-brew-brown mb-3">Experience BrewBreeze</h2>
+                    <p class="text-gray-600 text-lg font-sans">Discover our coffee journey</p>
+                </div>
+                
+                <div class="relative flex items-center justify-center h-[400px] md:h-[500px]">
+                    <!-- Video 1 - Left Side (Small) -->
+                    <div class="video-card absolute left-0 md:left-[5%] z-10 w-64 h-64 md:w-80 md:h-80 transition-all duration-700 cursor-pointer hover:scale-105" 
+                         onclick="goToSlide(1)">
+                        <div class="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl border-4 border-white transform hover:-rotate-2">
+                            <video class="w-full h-full object-cover" autoplay muted loop playsinline>
+                                <source src="{{ asset('images/video 1.mp4') }}" type="video/mp4">
+                            </video>
+                            <div class="absolute inset-0 bg-black/20 hover:bg-black/10 transition-colors"></div>
+                            <div class="absolute bottom-4 left-4 right-4 text-white">
+                                <p class="text-sm font-semibold font-sans uppercase tracking-wide">Picture 1</p>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Carousel Controls - Left Arrow -->
-                        <button onclick="previousSlide()" class="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-white/80 hover:bg-white text-brew-brown p-3 rounded-full transition-all hover:scale-110 shadow-lg backdrop-blur-sm">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-                            </svg>
-                        </button>
-
-                        <!-- Carousel Controls - Right Arrow -->
-                        <button onclick="nextSlide()" class="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white/80 hover:bg-white text-brew-brown p-3 rounded-full transition-all hover:scale-110 shadow-lg backdrop-blur-sm">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                            </svg>
-                        </button>
-
-                        <!-- Carousel Indicators -->
-                        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-3">
-                            <button onclick="goToSlide(1)" class="carousel-indicator w-3 h-3 rounded-full bg-white/60 hover:bg-white transition-all cursor-pointer active" data-slide="1"></button>
-                            <button onclick="goToSlide(2)" class="carousel-indicator w-3 h-3 rounded-full bg-white/60 hover:bg-white transition-all cursor-pointer" data-slide="2"></button>
-                            <button onclick="goToSlide(3)" class="carousel-indicator w-3 h-3 rounded-full bg-white/60 hover:bg-white transition-all cursor-pointer" data-slide="3"></button>
+                    <!-- Video 2 - Center (Large) -->
+                    <div class="video-card absolute left-1/2 -translate-x-1/2 z-30 w-80 h-80 md:w-[450px] md:h-[450px] transition-all duration-700 cursor-pointer hover:scale-105" 
+                         onclick="goToSlide(2)">
+                        <div class="relative w-full h-full rounded-3xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.3)] border-[6px] border-white">
+                            <video class="w-full h-full object-cover" autoplay muted loop playsinline>
+                                <source src="{{ asset('images/video 2.mp4') }}" type="video/mp4">
+                            </video>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+                            <div class="absolute bottom-6 left-6 right-6 text-white">
+                                <p class="text-lg font-bold font-display">Picture 2</p>
+                                <p class="text-sm font-sans opacity-90 mt-1">Featured Experience</p>
+                            </div>
                         </div>
+                    </div>
+
+                    <!-- Video 3 - Right Side (Small) -->
+                    <div class="video-card absolute right-0 md:right-[5%] z-10 w-64 h-64 md:w-80 md:h-80 transition-all duration-700 cursor-pointer hover:scale-105" 
+                         onclick="goToSlide(3)">
+                        <div class="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl border-4 border-white transform hover:rotate-2">
+                            <video class="w-full h-full object-cover" autoplay muted loop playsinline>
+                                <source src="{{ asset('images/video 3.mp4') }}" type="video/mp4">
+                            </video>
+                            <div class="absolute inset-0 bg-black/20 hover:bg-black/10 transition-colors"></div>
+                            <div class="absolute bottom-4 left-4 right-4 text-white">
+                                <p class="text-sm font-semibold font-sans uppercase tracking-wide">Picture 3</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Navigation Arrows -->
+                    <button onclick="previousSlide()" 
+                            class="absolute left-2 md:left-8 top-1/2 -translate-y-1/2 z-40 bg-white/90 hover:bg-white text-brew-brown p-3 md:p-4 rounded-xl transition-all hover:scale-110 shadow-xl backdrop-blur-sm">
+                        <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                    </button>
+
+                    <button onclick="nextSlide()" 
+                            class="absolute right-2 md:right-8 top-1/2 -translate-y-1/2 z-40 bg-white/90 hover:bg-white text-brew-brown p-3 md:p-4 rounded-xl transition-all hover:scale-110 shadow-xl backdrop-blur-sm">
+                        <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </button>
+
+                    <!-- Carousel Indicators -->
+                    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 z-40 flex gap-3">
+                        <button onclick="goToSlide(1)" class="carousel-indicator w-3 h-3 rounded-full bg-brew-brown/40 hover:bg-brew-brown transition-all cursor-pointer" data-slide="1"></button>
+                        <button onclick="goToSlide(2)" class="carousel-indicator w-3 h-3 rounded-full bg-brew-brown/40 hover:bg-brew-brown transition-all cursor-pointer active" data-slide="2"></button>
+                        <button onclick="goToSlide(3)" class="carousel-indicator w-3 h-3 rounded-full bg-brew-brown/40 hover:bg-brew-brown transition-all cursor-pointer" data-slide="3"></button>
                     </div>
                 </div>
             </div>
@@ -312,33 +332,63 @@
                 animation-fill-mode: both;
             }
 
-            /* Carousel Styles */
-            .carousel-slide.active {
-                @apply opacity-100;
+            /* Carousel Indicator Styles */
+            .carousel-indicator.active {
+                @apply bg-brew-brown w-8 scale-125;
             }
 
-            .carousel-indicator.active {
-                @apply bg-white w-4 scale-125;
+            /* Video Card Transitions */
+            .video-card {
+                transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
             }
         </style>
 
         <script>
-            let currentSlide = 1;
+            let currentSlide = 2; // Start with center video
             const totalSlides = 3;
             let carouselAutoPlay;
 
+            const slidePositions = {
+                1: {
+                    // Video 1 in center
+                    1: { left: '50%', transform: 'translateX(-50%)', zIndex: 30, width: 'w-80 md:w-[450px]', height: 'h-80 md:h-[450px]', scale: 'scale-100' },
+                    2: { left: '0', md_left: '5%', transform: 'translateX(0)', zIndex: 10, width: 'w-64 md:w-80', height: 'h-64 md:h-80', scale: 'scale-100' },
+                    3: { left: '100%', md_left: '95%', transform: 'translateX(-100%)', zIndex: 10, width: 'w-64 md:w-80', height: 'h-64 md:h-80', scale: 'scale-100' }
+                },
+                2: {
+                    // Video 2 in center (default)
+                    1: { left: '0', md_left: '5%', transform: 'translateX(0)', zIndex: 10, width: 'w-64 md:w-80', height: 'h-64 md:h-80', scale: 'scale-100' },
+                    2: { left: '50%', transform: 'translateX(-50%)', zIndex: 30, width: 'w-80 md:w-[450px]', height: 'h-80 md:h-[450px]', scale: 'scale-100' },
+                    3: { left: '100%', md_left: '95%', transform: 'translateX(-100%)', zIndex: 10, width: 'w-64 md:w-80', height: 'h-64 md:h-80', scale: 'scale-100' }
+                },
+                3: {
+                    // Video 3 in center
+                    1: { left: '0', md_left: '5%', transform: 'translateX(0)', zIndex: 10, width: 'w-64 md:w-80', height: 'h-64 md:h-80', scale: 'scale-100' },
+                    2: { left: '0', md_left: '5%', transform: 'translateX(0)', zIndex: 10, width: 'w-64 md:w-80', height: 'h-64 md:h-80', scale: 'scale-100' },
+                    3: { left: '50%', transform: 'translateX(-50%)', zIndex: 30, width: 'w-80 md:w-[450px]', height: 'h-80 md:h-[450px]', scale: 'scale-100' }
+                }
+            };
+
             function showSlide(n) {
-                // Remove active class from all slides and indicators
-                document.querySelectorAll('.carousel-slide').forEach(slide => {
-                    slide.classList.remove('active');
-                });
+                const positions = slidePositions[n];
+                
+                // Update each video card position
+                for (let i = 1; i <= 3; i++) {
+                    const card = document.querySelector(`.video-card:nth-child(${i})`);
+                    const pos = positions[i];
+                    
+                    if (card) {
+                        card.style.left = pos.left;
+                        card.style.transform = pos.transform;
+                        card.style.zIndex = pos.zIndex;
+                    }
+                }
+
+                // Update indicators
                 document.querySelectorAll('.carousel-indicator').forEach(indicator => {
                     indicator.classList.remove('active');
                 });
-
-                // Add active class to current slide and indicator
-                document.getElementById(`slide-${n}`).classList.add('active');
-                document.querySelector(`.carousel-indicator[data-slide="${n}"]`).classList.add('active');
+                document.querySelector(`.carousel-indicator[data-slide="${n}"]`)?.classList.add('active');
             }
 
             function nextSlide() {
@@ -373,18 +423,6 @@
                 showSlide(currentSlide);
                 carouselAutoPlay = setInterval(autoPlayCarousel, 5000);
             });
-
-            // Pause autoplay on hover
-            const carouselContainer = document.querySelector('.carousel-wrapper');
-            if (carouselContainer) {
-                carouselContainer.addEventListener('mouseenter', function() {
-                    clearInterval(carouselAutoPlay);
-                });
-
-                carouselContainer.addEventListener('mouseleave', function() {
-                    carouselAutoPlay = setInterval(autoPlayCarousel, 5000);
-                });
-            }
         </script>
 
     <!-- Call to Action Section -->
