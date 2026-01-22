@@ -97,6 +97,30 @@ class Order extends Model
     }
 
     /**
+     * Scope to eagerly load order details (customer, items, products).
+     */
+    public function scopeWithDetails($query)
+    {
+        return $query->with(['customer', 'orderItems.product', 'payment']);
+    }
+
+    /**
+     * Scope to order by most recent first.
+     */
+    public function scopeRecent($query)
+    {
+        return $query->orderByDesc('created_at');
+    }
+
+    /**
+     * Scope to filter by status.
+     */
+    public function scopeByStatus($query, $status)
+    {
+        return $query->where('status', $status);
+    }
+
+    /**
      * Get formatted total attribute.
      */
     public function getFormattedTotalAttribute()
@@ -134,5 +158,21 @@ class Order extends Model
     public function getTotalItemsAttribute()
     {
         return $this->orderItems->sum('quantity');
+    }
+
+    /**
+     * Get formatted status (e.g., 'pending' -> 'Pending').
+     */
+    public function getFormattedStatusAttribute()
+    {
+        return ucfirst(str_replace('_', ' ', $this->status));
+    }
+
+    /**
+     * Check if order can be cancelled.
+     */
+    public function canCancel(): bool
+    {
+        return in_array($this->status, ['pending', 'confirmed']);
     }
 }

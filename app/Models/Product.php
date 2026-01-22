@@ -99,6 +99,15 @@ class Product extends Model
     }
 
     /**
+     * Scope to get most sold products.
+     */
+    public function scopeTopSelling($query)
+    {
+        return $query->withCount('orderItems')
+            ->orderByDesc('order_items_count');
+    }
+
+    /**
      * Scope a query to filter by price range.
      */
     public function scopePriceRange($query, $min = null, $max = null)
