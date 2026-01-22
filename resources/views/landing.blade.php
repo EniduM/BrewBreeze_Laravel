@@ -112,46 +112,33 @@
                 </div>
                 
                 <div class="relative flex items-center justify-center h-[400px] md:h-[500px]">
-                    <!-- Video 1 - Left Side (Small) -->
-                    <div class="video-card absolute left-0 md:left-[5%] z-10 w-64 h-64 md:w-80 md:h-80 transition-all duration-700 cursor-pointer hover:scale-105" 
+                    <!-- Video 1 -->
+                    <div class="video-card video-1 absolute left-0 md:left-[5%] z-10 w-64 h-64 md:w-80 md:h-80 transition-all duration-700 cursor-pointer hover:scale-105" 
                          onclick="goToSlide(1)">
-                        <div class="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl border-4 border-white transform hover:-rotate-2">
+                        <div class="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl border-4 border-white">
                             <video class="w-full h-full object-cover" autoplay muted loop playsinline>
                                 <source src="{{ asset('images/video 1.mp4') }}" type="video/mp4">
                             </video>
-                            <div class="absolute inset-0 bg-black/20 hover:bg-black/10 transition-colors"></div>
-                            <div class="absolute bottom-4 left-4 right-4 text-white">
-                                <p class="text-sm font-semibold font-sans uppercase tracking-wide">Picture 1</p>
-                            </div>
                         </div>
                     </div>
 
-                    <!-- Video 2 - Center (Large) -->
-                    <div class="video-card absolute left-1/2 -translate-x-1/2 z-30 w-80 h-80 md:w-[450px] md:h-[450px] transition-all duration-700 cursor-pointer hover:scale-105" 
+                    <!-- Video 2 -->
+                    <div class="video-card video-2 absolute left-1/2 -translate-x-1/2 z-30 w-80 h-80 md:w-[450px] md:h-[450px] transition-all duration-700 cursor-pointer hover:scale-105" 
                          onclick="goToSlide(2)">
                         <div class="relative w-full h-full rounded-3xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.3)] border-[6px] border-white">
                             <video class="w-full h-full object-cover" autoplay muted loop playsinline>
                                 <source src="{{ asset('images/video 2.mp4') }}" type="video/mp4">
                             </video>
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
-                            <div class="absolute bottom-6 left-6 right-6 text-white">
-                                <p class="text-lg font-bold font-display">Picture 2</p>
-                                <p class="text-sm font-sans opacity-90 mt-1">Featured Experience</p>
-                            </div>
                         </div>
                     </div>
 
-                    <!-- Video 3 - Right Side (Small) -->
-                    <div class="video-card absolute right-0 md:right-[5%] z-10 w-64 h-64 md:w-80 md:h-80 transition-all duration-700 cursor-pointer hover:scale-105" 
+                    <!-- Video 3 -->
+                    <div class="video-card video-3 absolute right-0 md:right-[5%] z-10 w-64 h-64 md:w-80 md:h-80 transition-all duration-700 cursor-pointer hover:scale-105" 
                          onclick="goToSlide(3)">
-                        <div class="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl border-4 border-white transform hover:rotate-2">
+                        <div class="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl border-4 border-white">
                             <video class="w-full h-full object-cover" autoplay muted loop playsinline>
                                 <source src="{{ asset('images/video 3.mp4') }}" type="video/mp4">
                             </video>
-                            <div class="absolute inset-0 bg-black/20 hover:bg-black/10 transition-colors"></div>
-                            <div class="absolute bottom-4 left-4 right-4 text-white">
-                                <p class="text-sm font-semibold font-sans uppercase tracking-wide">Picture 3</p>
-                            </div>
                         </div>
                     </div>
 
@@ -346,42 +333,58 @@
         <script>
             let currentSlide = 2; // Start with center video
             const totalSlides = 3;
-            let carouselAutoPlay;
-
-            const slidePositions = {
-                1: {
-                    // Video 1 in center
-                    1: { left: '50%', transform: 'translateX(-50%)', zIndex: 30, width: 'w-80 md:w-[450px]', height: 'h-80 md:h-[450px]', scale: 'scale-100' },
-                    2: { left: '0', md_left: '5%', transform: 'translateX(0)', zIndex: 10, width: 'w-64 md:w-80', height: 'h-64 md:h-80', scale: 'scale-100' },
-                    3: { left: '100%', md_left: '95%', transform: 'translateX(-100%)', zIndex: 10, width: 'w-64 md:w-80', height: 'h-64 md:h-80', scale: 'scale-100' }
-                },
-                2: {
-                    // Video 2 in center (default)
-                    1: { left: '0', md_left: '5%', transform: 'translateX(0)', zIndex: 10, width: 'w-64 md:w-80', height: 'h-64 md:h-80', scale: 'scale-100' },
-                    2: { left: '50%', transform: 'translateX(-50%)', zIndex: 30, width: 'w-80 md:w-[450px]', height: 'h-80 md:h-[450px]', scale: 'scale-100' },
-                    3: { left: '100%', md_left: '95%', transform: 'translateX(-100%)', zIndex: 10, width: 'w-64 md:w-80', height: 'h-64 md:h-80', scale: 'scale-100' }
-                },
-                3: {
-                    // Video 3 in center
-                    1: { left: '0', md_left: '5%', transform: 'translateX(0)', zIndex: 10, width: 'w-64 md:w-80', height: 'h-64 md:h-80', scale: 'scale-100' },
-                    2: { left: '0', md_left: '5%', transform: 'translateX(0)', zIndex: 10, width: 'w-64 md:w-80', height: 'h-64 md:h-80', scale: 'scale-100' },
-                    3: { left: '50%', transform: 'translateX(-50%)', zIndex: 30, width: 'w-80 md:w-[450px]', height: 'h-80 md:h-[450px]', scale: 'scale-100' }
-                }
-            };
 
             function showSlide(n) {
-                const positions = slidePositions[n];
-                
-                // Update each video card position
-                for (let i = 1; i <= 3; i++) {
-                    const card = document.querySelector(`.video-card:nth-child(${i})`);
-                    const pos = positions[i];
-                    
+                // Get all video cards
+                const video1 = document.querySelector('.video-1');
+                const video2 = document.querySelector('.video-2');
+                const video3 = document.querySelector('.video-3');
+
+                // Reset all to small size and side positions
+                [video1, video2, video3].forEach(card => {
                     if (card) {
-                        card.style.left = pos.left;
-                        card.style.transform = pos.transform;
-                        card.style.zIndex = pos.zIndex;
+                        card.classList.remove('w-80', 'h-80', 'md:w-[450px]', 'md:h-[450px]', 'z-30');
+                        card.classList.add('w-64', 'h-64', 'md:w-80', 'md:h-80', 'z-10');
                     }
+                });
+
+                // Position based on which slide is active
+                if (n === 1) {
+                    // Video 1 in center
+                    video1.style.left = '50%';
+                    video1.style.transform = 'translateX(-50%)';
+                    video1.classList.remove('w-64', 'h-64', 'md:w-80', 'md:h-80', 'z-10');
+                    video1.classList.add('w-80', 'h-80', 'md:w-[450px]', 'md:h-[450px]', 'z-30');
+                    
+                    video2.style.left = '0';
+                    video2.style.transform = 'translateX(0)';
+                    
+                    video3.style.left = '100%';
+                    video3.style.transform = 'translateX(-100%)';
+                } else if (n === 2) {
+                    // Video 2 in center
+                    video1.style.left = '0';
+                    video1.style.transform = 'translateX(0)';
+                    
+                    video2.style.left = '50%';
+                    video2.style.transform = 'translateX(-50%)';
+                    video2.classList.remove('w-64', 'h-64', 'md:w-80', 'md:h-80', 'z-10');
+                    video2.classList.add('w-80', 'h-80', 'md:w-[450px]', 'md:h-[450px]', 'z-30');
+                    
+                    video3.style.left = '100%';
+                    video3.style.transform = 'translateX(-100%)';
+                } else if (n === 3) {
+                    // Video 3 in center
+                    video1.style.left = '0';
+                    video1.style.transform = 'translateX(0)';
+                    
+                    video2.style.left = '0';
+                    video2.style.transform = 'translateX(0)';
+                    
+                    video3.style.left = '50%';
+                    video3.style.transform = 'translateX(-50%)';
+                    video3.classList.remove('w-64', 'h-64', 'md:w-80', 'md:h-80', 'z-10');
+                    video3.classList.add('w-80', 'h-80', 'md:w-[450px]', 'md:h-[450px]', 'z-30');
                 }
 
                 // Update indicators
@@ -394,34 +397,21 @@
             function nextSlide() {
                 currentSlide = (currentSlide % totalSlides) + 1;
                 showSlide(currentSlide);
-                resetAutoPlay();
             }
 
             function previousSlide() {
                 currentSlide = ((currentSlide - 2 + totalSlides) % totalSlides) + 1;
                 showSlide(currentSlide);
-                resetAutoPlay();
             }
 
             function goToSlide(n) {
                 currentSlide = n;
                 showSlide(currentSlide);
-                resetAutoPlay();
             }
 
-            function autoPlayCarousel() {
-                nextSlide();
-            }
-
-            function resetAutoPlay() {
-                clearInterval(carouselAutoPlay);
-                carouselAutoPlay = setInterval(autoPlayCarousel, 5000);
-            }
-
-            // Initialize carousel
+            // Initialize carousel on page load
             document.addEventListener('DOMContentLoaded', function() {
                 showSlide(currentSlide);
-                carouselAutoPlay = setInterval(autoPlayCarousel, 5000);
             });
         </script>
 
