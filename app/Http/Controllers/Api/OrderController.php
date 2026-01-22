@@ -203,4 +203,43 @@ class OrderController extends Controller
             ], 500);
         }
     }
+
+    /**
+     * Get paginated list of orders (admin or customer).
+     */
+    public function index(): JsonResponse
+    {
+        $user = request()->user();
+        
+        if ($user->isAdmin()) {
+            $orders = Order::withDetails()->recent()->paginate(15);
+        } else {
+            $customer = $user->getOrCreateCustomer();
+            $orders = Order::where('customer_id', $customer->customer_id)
+                ->withDetails()
+                ->recent()
+                ->paginate(15);
+        }
+
+        return response()->json([
+            'data' => $orders->items(),
+            'meta' => [
+                'total' => $orders->total(),
+                'per_page' => $orders->perPage(),
+                'current_page' => $orders->currentPage(),
+            ],
+        ]);
+    }
+
+    /**
+     * Get a single order.
+     */
+    public function show(Order $order): JsonResponse
+    {
+        $this->authorize('view', $order);
+
+        return response()->json([
+            'data' => $order->load('orderItems.product'),
+        ]);
+    }
 }
