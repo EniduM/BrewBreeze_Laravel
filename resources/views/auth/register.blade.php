@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- CSRF token for securing AJAX requests and form submissions -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Create Account - {{ config('app.name', 'BrewBreeze') }}</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
