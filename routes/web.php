@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Auth\CustomerLoginController;
 use App\Http\Controllers\Auth\AdminLoginController;
-use App\Http\Controllers\Auth\OtpController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -123,9 +122,8 @@ Route::middleware([
     })->name('customer.subscriptions');
 });
 
-// OTP routes
-Route::middleware(['web'])->group(function () {
-    Route::get('/otp', [OtpController::class, 'showForm'])->name('otp.form');
-    Route::post('/otp/send', [OtpController::class, 'send'])->name('otp.send');
-    Route::post('/otp/verify', [OtpController::class, 'verify'])->name('otp.verify');
-});
+Route::get('/firebase-login', function () {
+    return view('auth.firebase-login');
+})->name('firebase.login');
+
+Route::post('/firebase-login', [\App\Http\Controllers\Auth\FirebaseLoginController::class, 'login']);
