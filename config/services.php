@@ -47,4 +47,9 @@ return [
         'mode' => env('PAYPAL_MODE', 'sandbox'), // sandbox or live
     ],
 
+    'twilio' => [
+        'sid' => env('TWILIO_SID'),
+        'token' => env('TWILIO_TOKEN'),
+        'from' => env('TWILIO_FROM'),
+    ],
 ];
