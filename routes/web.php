@@ -121,9 +121,3 @@ Route::middleware([
         return view('customer.subscriptions');
     })->name('customer.subscriptions');
 });
-
-Route::get('/firebase-login', function () {
-    return view('auth.firebase-login');
-})->name('firebase.login');
-
-Route::post('/firebase-login', [\App\Http\Controllers\Auth\FirebaseLoginController::class, 'login']);

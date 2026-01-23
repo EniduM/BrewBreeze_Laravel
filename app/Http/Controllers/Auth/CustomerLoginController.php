@@ -55,18 +55,10 @@ class CustomerLoginController extends Controller
             Auth::logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();
+            
             throw ValidationException::withMessages([
                 Fortify::username() => ['Please use the admin login page.'],
             ]);
-        }
-
-        // MFA: If user has phone, require OTP
-        if ($user->phone) {
-            Auth::logout();
-            $request->session()->invalidate();
-            $request->session()->regenerateToken();
-            $request->session()->put('otp:user_id', $user->id);
-            return redirect()->route('otp.form');
         }
 
         // Redirect straight to landing page after successful login
