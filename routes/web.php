@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\CustomerLoginController;
 use App\Http\Controllers\Auth\AdminLoginController;
+use App\Http\Controllers\Auth\OtpController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -120,4 +121,11 @@ Route::middleware([
     Route::get('/subscriptions', function () {
         return view('customer.subscriptions');
     })->name('customer.subscriptions');
+});
+
+// OTP routes
+Route::middleware(['web'])->group(function () {
+    Route::get('/otp', [OtpController::class, 'showForm'])->name('otp.form');
+    Route::post('/otp/send', [OtpController::class, 'send'])->name('otp.send');
+    Route::post('/otp/verify', [OtpController::class, 'verify'])->name('otp.verify');
 });
