@@ -104,6 +104,7 @@
                 {{ __('Please copy your new API token. For your security, it won\'t be shown again.') }}
             </div>
 
+            <!-- The API token is passed from the backend to the frontend here. The value of $plainTextToken is set by the backend after token creation, and shown to the user for copying. -->
             <x-input x-ref="plaintextToken" type="text" readonly :value="$plainTextToken"
                 class="mt-4 bg-gray-100 px-4 py-2 rounded font-mono text-sm text-gray-500 w-full break-all"
                 autofocus autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"

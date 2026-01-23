@@ -85,6 +85,11 @@
                             </button>
                             <div x-show="open" @click.away="open = false" x-transition class="absolute right-0 mt-2 w-48 bg-brew-cream rounded-lg shadow-lg py-2 z-50 border border-brew-light-brown">
                                 <a href="{{ route('profile.show') }}" class="block px-4 py-2 text-brew-brown hover:bg-brew-light-brown hover:text-white">My Profile</a>
+                                @if(auth()->user()->isAdmin())
+                                    <a href="{{ route('admin.messages.index') }}" class="block px-4 py-2 text-brew-brown hover:bg-brew-light-brown hover:text-white">Messages</a>
+                                @else
+                                    <a href="{{ route('customer.message') }}" class="block px-4 py-2 text-brew-brown hover:bg-brew-light-brown hover:text-white">Messages</a>
+                                @endif
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <button type="submit" class="block w-full text-left px-4 py-2 text-brew-brown hover:bg-brew-light-brown hover:text-white">Sign Out</button>
