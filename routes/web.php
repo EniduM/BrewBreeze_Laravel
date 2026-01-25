@@ -12,6 +12,16 @@ Route::get('/about', function () {
     return view('about');
 })->name('about');
 
+// Override Jetstream profile route to use Livewire instead of Inertia
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+])->group(function () {
+    Route::get('/user/profile', function () {
+        return view('profile.show');
+    })->name('profile.show');
+});
+
 // Customer Login Routes
 Route::get('/login', [CustomerLoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [CustomerLoginController::class, 'store'])
