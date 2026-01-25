@@ -49,15 +49,38 @@
                 </div>
 
                 @if ($showingConfirmation)
-                    <div class="mt-4">
+                    <form wire:submit.prevent="confirmTwoFactorAuthentication" class="mt-4">
                         <x-label for="code" value="{{ __('Code') }}" />
 
-                        <x-input id="code" type="text" name="code" class="block mt-1 w-1/2" inputmode="numeric" autofocus autocomplete="one-time-code"
-                            wire:model="code"
-                            wire:keydown.enter="confirmTwoFactorAuthentication" />
+                        <!-- Modern rounded input field -->
+                        <input 
+                            id="code" 
+                            type="text" 
+                            name="code" 
+                            class="block mt-1 w-full md:w-1/2 border-gray-300 focus:border-[#6B4423] focus:ring focus:ring-[#6B4423] focus:ring-opacity-50 rounded-lg shadow-sm" 
+                            inputmode="numeric" 
+                            autofocus 
+                            autocomplete="one-time-code"
+                            wire:model.live="code"
+                            placeholder="Enter 6-digit code"
+                            maxlength="6" />
 
-                        <x-input-error for="code" class="mt-2" />
-                    </div>
+                        @error('code')
+                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                        
+                        @if($code)
+                            <p class="text-xs text-gray-500 mt-1">Current code: {{ $code }}</p>
+                        @endif
+                        
+                        <!-- Modern rounded Confirm button -->
+                        <button type="submit" 
+                            class="inline-flex items-center px-6 py-3 bg-[#6B4423] hover:bg-[#5A3A1E] border border-transparent rounded-full font-semibold text-sm text-white tracking-wide hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#6B4423] focus:ring-offset-2 disabled:opacity-50 transition-all duration-200 mt-3"
+                            wire:loading.attr="disabled">
+                            <span wire:loading.remove wire:target="confirmTwoFactorAuthentication">{{ __('Confirm') }}</span>
+                            <span wire:loading wire:target="confirmTwoFactorAuthentication">Confirming...</span>
+                        </button>
+                    </form>
                 @endif
             @endif
 
@@ -78,44 +101,47 @@
 
         <div class="mt-5">
             @if (! $this->enabled)
-                <x-confirms-password wire:then="enableTwoFactorAuthentication">
-                    <x-button type="button" wire:loading.attr="disabled">
-                        {{ __('Enable') }}
-                    </x-button>
-                </x-confirms-password>
+                <!-- Modern rounded Enable button with coffee theme -->
+                <button type="button" 
+                    wire:click="enableTwoFactorAuthentication" 
+                    class="inline-flex items-center px-6 py-3 bg-[#6B4423] hover:bg-[#5A3A1E] border border-transparent rounded-full font-semibold text-sm text-white tracking-wide hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#6B4423] focus:ring-offset-2 disabled:opacity-50 transition-all duration-200"
+                    wire:loading.attr="disabled">
+                    <span wire:loading.remove>{{ __('Enable') }}</span>
+                    <span wire:loading>Enabling...</span>
+                </button>
+                
+                <p class="text-xs text-gray-500 mt-3">Note: You will be asked to confirm your password</p>
             @else
                 @if ($showingRecoveryCodes)
-                    <x-confirms-password wire:then="regenerateRecoveryCodes">
-                        <x-secondary-button class="me-3">
-                            {{ __('Regenerate Recovery Codes') }}
-                        </x-secondary-button>
-                    </x-confirms-password>
-                @elseif ($showingConfirmation)
-                    <x-confirms-password wire:then="confirmTwoFactorAuthentication">
-                        <x-button type="button" class="me-3" wire:loading.attr="disabled">
-                            {{ __('Confirm') }}
-                        </x-button>
-                    </x-confirms-password>
-                @else
-                    <x-confirms-password wire:then="showRecoveryCodes">
-                        <x-secondary-button class="me-3">
-                            {{ __('Show Recovery Codes') }}
-                        </x-secondary-button>
-                    </x-confirms-password>
+                    <!-- Modern rounded secondary button -->
+                    <button type="button" 
+                        wire:click="regenerateRecoveryCodes"
+                        class="inline-flex items-center px-6 py-3 bg-white hover:bg-gray-50 border border-gray-300 rounded-full font-semibold text-sm text-gray-700 tracking-wide shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[#6B4423] focus:ring-offset-2 disabled:opacity-50 transition-all duration-200 me-3">
+                        {{ __('Regenerate Recovery Codes') }}
+                    </button>
+                @elseif (!$showingConfirmation)
+                    <button type="button" 
+                        wire:click="showRecoveryCodes"
+                        class="inline-flex items-center px-6 py-3 bg-white hover:bg-gray-50 border border-gray-300 rounded-full font-semibold text-sm text-gray-700 tracking-wide shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[#6B4423] focus:ring-offset-2 disabled:opacity-50 transition-all duration-200 me-3">
+                        {{ __('Show Recovery Codes') }}
+                    </button>
                 @endif
 
-                @if ($showingConfirmation)
-                    <x-confirms-password wire:then="disableTwoFactorAuthentication">
-                        <x-secondary-button wire:loading.attr="disabled">
-                            {{ __('Cancel') }}
-                        </x-secondary-button>
-                    </x-confirms-password>
+                @if (!$showingConfirmation)
+                    <!-- Modern rounded danger button -->
+                    <button type="button" 
+                        wire:click="disableTwoFactorAuthentication"
+                        class="inline-flex items-center px-6 py-3 bg-red-600 hover:bg-red-500 border border-transparent rounded-full font-semibold text-sm text-white tracking-wide hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:opacity-50 transition-all duration-200"
+                        wire:loading.attr="disabled">
+                        {{ __('Disable') }}
+                    </button>
                 @else
-                    <x-confirms-password wire:then="disableTwoFactorAuthentication">
-                        <x-danger-button wire:loading.attr="disabled">
-                            {{ __('Disable') }}
-                        </x-danger-button>
-                    </x-confirms-password>
+                    <button type="button" 
+                        wire:click="disableTwoFactorAuthentication"
+                        class="inline-flex items-center px-6 py-3 bg-white hover:bg-gray-50 border border-gray-300 rounded-full font-semibold text-sm text-gray-700 tracking-wide shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[#6B4423] focus:ring-offset-2 disabled:opacity-50 transition-all duration-200"
+                        wire:loading.attr="disabled">
+                        {{ __('Cancel') }}
+                    </button>
                 @endif
 
             @endif

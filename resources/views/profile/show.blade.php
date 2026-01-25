@@ -11,12 +11,12 @@
     
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     
     <style>
         .font-display { font-family: 'Playfair Display', serif; }
         .font-sans { font-family: 'Inter', sans-serif; }
-        body { background: #fdf7f2; }
+        /* Modern soft background color */
+        body { background: #f9f6f3; }
         @keyframes float-soft { from { transform: translateY(0); } to { transform: translateY(-10px); } }
         @keyframes fade-in-up { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
     </style>
@@ -164,31 +164,32 @@
                     <p class="mt-3 text-base text-brew-brown/70 font-sans">Manage your account settings and preferences</p>
                 </div>
 
-                <div class="space-y-8">
+                <!-- Modern Card-Based Layout -->
+                <div class="space-y-6">
                     @if (Laravel\Fortify\Features::canUpdateProfileInformation())
-                        <div class="bg-white/95 backdrop-blur-lg shadow-xl rounded-2xl border border-brew-light-brown/20 overflow-hidden">
+                        <div class="bg-white rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-200 overflow-hidden">
                             @livewire('profile.update-profile-information-form')
                         </div>
                     @endif
 
                     @if (Laravel\Fortify\Features::enabled(Laravel\Fortify\Features::updatePasswords()))
-                        <div class="bg-white/95 backdrop-blur-lg shadow-xl rounded-2xl border border-brew-light-brown/20 overflow-hidden">
+                        <div class="bg-white rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-200 overflow-hidden">
                             @livewire('profile.update-password-form')
                         </div>
                     @endif
 
                     @if (Laravel\Fortify\Features::canManageTwoFactorAuthentication())
-                        <div class="bg-white/95 backdrop-blur-lg shadow-xl rounded-2xl border border-brew-light-brown/20 overflow-hidden">
+                        <div class="bg-white rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-200 overflow-hidden">
                             @livewire('profile.two-factor-authentication-form')
                         </div>
                     @endif
 
-                    <div class="bg-white/95 backdrop-blur-lg shadow-xl rounded-2xl border border-brew-light-brown/20 overflow-hidden">
+                    <div class="bg-white rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-200 overflow-hidden">
                         @livewire('profile.logout-other-browser-sessions-form')
                     </div>
 
                     @if (Laravel\Jetstream\Jetstream::hasAccountDeletionFeatures())
-                        <div class="bg-white/95 backdrop-blur-lg shadow-xl rounded-2xl border border-brew-light-brown/20 overflow-hidden">
+                        <div class="bg-white rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-200 overflow-hidden">
                             @livewire('profile.delete-user-form')
                         </div>
                     @endif
@@ -198,6 +199,8 @@
     @endif
 
     <x-footer />
+    
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     @livewireScripts
 </body>
 </html>
