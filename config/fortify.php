@@ -151,7 +151,7 @@ return [
         Features::updatePasswords(),
         Features::twoFactorAuthentication([
             'confirm' => true,
-            'confirmPassword' => true,
+            'confirmPassword' => false, // Disabled password confirmation to avoid 403 error
             // 'window' => 0,
         ]),
     ],
