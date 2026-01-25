@@ -103,19 +103,20 @@
         </div>
 
         <!-- Video Carousel Section -->
-        <div class="bg-gradient-to-b from-white via-brew-cream/5 to-brew-cream/10 py-20 px-6 md:px-12 overflow-hidden">
+        <div class="bg-gradient-to-b from-white via-brew-cream/5 to-brew-cream/10 pt-32 pb-20 px-6 md:px-12 overflow-hidden">
             <div class="max-w-7xl mx-auto">
                 <!-- Text Label -->
-                <div class="text-center mb-12">
+                <div class="text-center mb-16">
                     <h2 class="font-display text-3xl md:text-5xl text-brew-brown mb-3">Experience BrewBreeze</h2>
                     <p class="text-gray-600 text-lg font-sans">Discover our coffee journey</p>
                 </div>
                 
                 <div class="relative flex items-center justify-center h-[400px] md:h-[500px]">
                     <!-- Video 1 -->
-                    <div class="video-card video-1 absolute left-0 md:left-[5%] z-10 w-64 h-64 md:w-80 md:h-80 transition-all duration-700 cursor-pointer hover:scale-105" 
+                    <div class="video-card video-1 absolute z-10 cursor-pointer hover:scale-105" 
+                         style="transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1); left: 5%; width: 256px; height: 256px;"
                          onclick="goToSlide(1)">
-                        <div class="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl border-4 border-white">
+                        <div class="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl border-4 border-white" style="transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);">
                             <video class="w-full h-full object-cover" autoplay muted loop playsinline>
                                 <source src="{{ asset('images/video 1.mp4') }}" type="video/mp4">
                             </video>
@@ -123,9 +124,10 @@
                     </div>
 
                     <!-- Video 2 -->
-                    <div class="video-card video-2 absolute left-1/2 -translate-x-1/2 z-30 w-80 h-80 md:w-[450px] md:h-[450px] transition-all duration-700 cursor-pointer hover:scale-105" 
+                    <div class="video-card video-2 absolute z-30 cursor-pointer hover:scale-105" 
+                         style="transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1); left: 50%; transform: translateX(-50%); width: 450px; height: 450px;"
                          onclick="goToSlide(2)">
-                        <div class="relative w-full h-full rounded-3xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.3)] border-[6px] border-white">
+                        <div class="relative w-full h-full rounded-3xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.3)] border-[6px] border-white" style="transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);">
                             <video class="w-full h-full object-cover" autoplay muted loop playsinline>
                                 <source src="{{ asset('images/video 2.mp4') }}" type="video/mp4">
                             </video>
@@ -133,9 +135,10 @@
                     </div>
 
                     <!-- Video 3 -->
-                    <div class="video-card video-3 absolute right-0 md:right-[5%] z-10 w-64 h-64 md:w-80 md:h-80 transition-all duration-700 cursor-pointer hover:scale-105" 
+                    <div class="video-card video-3 absolute z-10 cursor-pointer hover:scale-105" 
+                         style="transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1); right: 5%; width: 256px; height: 256px;"
                          onclick="goToSlide(3)">
-                        <div class="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl border-4 border-white">
+                        <div class="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl border-4 border-white" style="transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);">
                             <video class="w-full h-full object-cover" autoplay muted loop playsinline>
                                 <source src="{{ asset('images/video 3.mp4') }}" type="video/mp4">
                             </video>
@@ -168,7 +171,7 @@
         </div>
 
         <!-- Coffee Menu Preview Section -->
-        <div id="menu" class="bg-gradient-to-b from-brew-cream/5 via-brew-cream/10 to-brew-cream/5 py-20 px-6 md:px-12">
+        <div id="menu" class="bg-gradient-to-b from-brew-cream/5 via-brew-cream/10 to-brew-cream/5 pt-20 pb-20 px-6 md:px-12">
             <div class="max-w-6xl mx-auto">
                 <div class="text-center mb-16">
                     <p class="text-brew-brown text-sm uppercase tracking-[0.2em] mb-3 font-sans font-bold">Premium Selection</p>
@@ -327,80 +330,99 @@
             /* Video Card Transitions */
             .video-card {
                 transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+                will-change: transform, width, height, left, right;
+            }
+            
+            .video-card div {
+                transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
             }
         </style>
 
         <script>
-            let currentSlide = 2; // Start with center video
+            let currentSlide = 2;
             const totalSlides = 3;
 
             function showSlide(n) {
-                // Get all video cards
                 const video1 = document.querySelector('.video-1');
                 const video2 = document.querySelector('.video-2');
                 const video3 = document.querySelector('.video-3');
 
-                // Reset all to small size first
+                if (!video1 || !video2 || !video3) return;
+
+                // Define sizes
+                const centerSize = 450;
+                const sideSize = 256;
+
+                // Reset all videos
                 [video1, video2, video3].forEach(card => {
-                    if (card) {
-                        card.classList.remove('w-80', 'h-80', 'md:w-[450px]', 'md:h-[450px]', 'z-30', 'rounded-3xl', 'border-[6px]');
-                        card.classList.add('w-64', 'h-64', 'md:w-80', 'md:h-80', 'z-10', 'rounded-2xl', 'border-4');
-                        card.querySelector('div').classList.remove('rounded-3xl', 'border-[6px]');
-                        card.querySelector('div').classList.add('rounded-2xl', 'border-4');
-                    }
+                    card.style.width = sideSize + 'px';
+                    card.style.height = sideSize + 'px';
+                    card.style.zIndex = '10';
+                    
+                    const cardDiv = card.querySelector('div');
+                    cardDiv.className = 'relative w-full h-full rounded-2xl overflow-hidden shadow-2xl border-4 border-white';
+                    cardDiv.style.transition = 'all 0.7s cubic-bezier(0.4, 0, 0.2, 1)';
                 });
 
-                // Position based on which slide is active (carousel rotation)
+                // Position based on active slide
                 if (n === 1) {
-                    // Video 1 in center, video 3 on left, video 2 on right
-                    video3.style.left = '0';
-                    video3.style.right = 'auto';
-                    video3.style.transform = 'translateX(0)';
-                    
+                    // Video 1 center
                     video1.style.left = '50%';
                     video1.style.right = 'auto';
                     video1.style.transform = 'translateX(-50%)';
-                    video1.classList.remove('w-64', 'h-64', 'md:w-80', 'md:h-80', 'z-10', 'rounded-2xl', 'border-4');
-                    video1.classList.add('w-80', 'h-80', 'md:w-[450px]', 'md:h-[450px]', 'z-30', 'rounded-3xl', 'border-[6px]');
-                    video1.querySelector('div').classList.remove('rounded-2xl', 'border-4');
-                    video1.querySelector('div').classList.add('rounded-3xl', 'border-[6px]');
+                    video1.style.width = centerSize + 'px';
+                    video1.style.height = centerSize + 'px';
+                    video1.style.zIndex = '30';
+                    video1.querySelector('div').className = 'relative w-full h-full rounded-3xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.3)] border-[6px] border-white';
                     
+                    // Video 3 left
+                    video3.style.left = '5%';
+                    video3.style.right = 'auto';
+                    video3.style.transform = 'translateX(0)';
+                    
+                    // Video 2 right
                     video2.style.left = 'auto';
-                    video2.style.right = '0';
+                    video2.style.right = '5%';
                     video2.style.transform = 'translateX(0)';
-                } else if (n === 2) {
-                    // Video 2 in center, video 1 on left, video 3 on right
-                    video1.style.left = '0';
-                    video1.style.right = 'auto';
-                    video1.style.transform = 'translateX(0)';
                     
+                } else if (n === 2) {
+                    // Video 2 center (default)
                     video2.style.left = '50%';
                     video2.style.right = 'auto';
                     video2.style.transform = 'translateX(-50%)';
-                    video2.classList.remove('w-64', 'h-64', 'md:w-80', 'md:h-80', 'z-10', 'rounded-2xl', 'border-4');
-                    video2.classList.add('w-80', 'h-80', 'md:w-[450px]', 'md:h-[450px]', 'z-30', 'rounded-3xl', 'border-[6px]');
-                    video2.querySelector('div').classList.remove('rounded-2xl', 'border-4');
-                    video2.querySelector('div').classList.add('rounded-3xl', 'border-[6px]');
+                    video2.style.width = centerSize + 'px';
+                    video2.style.height = centerSize + 'px';
+                    video2.style.zIndex = '30';
+                    video2.querySelector('div').className = 'relative w-full h-full rounded-3xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.3)] border-[6px] border-white';
                     
+                    // Video 1 left
+                    video1.style.left = '5%';
+                    video1.style.right = 'auto';
+                    video1.style.transform = 'translateX(0)';
+                    
+                    // Video 3 right
                     video3.style.left = 'auto';
-                    video3.style.right = '0';
+                    video3.style.right = '5%';
                     video3.style.transform = 'translateX(0)';
-                } else if (n === 3) {
-                    // Video 3 in center, video 2 on left, video 1 on right
-                    video2.style.left = '0';
-                    video2.style.right = 'auto';
-                    video2.style.transform = 'translateX(0)';
                     
+                } else if (n === 3) {
+                    // Video 3 center
                     video3.style.left = '50%';
                     video3.style.right = 'auto';
                     video3.style.transform = 'translateX(-50%)';
-                    video3.classList.remove('w-64', 'h-64', 'md:w-80', 'md:h-80', 'z-10', 'rounded-2xl', 'border-4');
-                    video3.classList.add('w-80', 'h-80', 'md:w-[450px]', 'md:h-[450px]', 'z-30', 'rounded-3xl', 'border-[6px]');
-                    video3.querySelector('div').classList.remove('rounded-2xl', 'border-4');
-                    video3.querySelector('div').classList.add('rounded-3xl', 'border-[6px]');
+                    video3.style.width = centerSize + 'px';
+                    video3.style.height = centerSize + 'px';
+                    video3.style.zIndex = '30';
+                    video3.querySelector('div').className = 'relative w-full h-full rounded-3xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.3)] border-[6px] border-white';
                     
+                    // Video 2 left
+                    video2.style.left = '5%';
+                    video2.style.right = 'auto';
+                    video2.style.transform = 'translateX(0)';
+                    
+                    // Video 1 right
                     video1.style.left = 'auto';
-                    video1.style.right = '0';
+                    video1.style.right = '5%';
                     video1.style.transform = 'translateX(0)';
                 }
 
@@ -408,7 +430,10 @@
                 document.querySelectorAll('.carousel-indicator').forEach(indicator => {
                     indicator.classList.remove('active');
                 });
-                document.querySelector(`.carousel-indicator[data-slide="${n}"]`)?.classList.add('active');
+                const activeIndicator = document.querySelector(`.carousel-indicator[data-slide="${n}"]`);
+                if (activeIndicator) {
+                    activeIndicator.classList.add('active');
+                }
             }
 
             function nextSlide() {
@@ -426,7 +451,7 @@
                 showSlide(currentSlide);
             }
 
-            // Initialize carousel on page load
+            // Initialize carousel
             document.addEventListener('DOMContentLoaded', function() {
                 showSlide(currentSlide);
             });
