@@ -38,30 +38,40 @@ class CustomerLoginController extends Controller
             'password' => 'required|string',
         ]);
 
-        // Attempt authentication
-        if (!Auth::attempt(
-            $request->only(Fortify::username(), 'password'),
-            $request->boolean('remember')
-        )) {
+        // Find the user by email/username
+        $user = \App\Models\User::where(Fortify::username(), $request->input(Fortify::username()))->first();
+
+        // Check if user exists and password is correct
+        if (!$user || !\Hash::check($request->input('password'), $user->password)) {
             throw ValidationException::withMessages([
                 Fortify::username() => [__('auth.failed')],
             ]);
         }
 
-        $user = Auth::user();
-
         // Verify the user is a customer
         if (!$user->isCustomer()) {
-            Auth::logout();
-            $request->session()->invalidate();
-            $request->session()->regenerateToken();
-            
             throw ValidationException::withMessages([
                 Fortify::username() => ['Please use the admin login page.'],
             ]);
         }
 
-        // Redirect straight to landing page after successful login
+        // Check if 2FA is enabled for this user
+        if ($user->two_factor_secret) {
+            // Store user ID in session for 2FA challenge
+            $request->session()->put([
+                'login.id' => $user->id,
+                'login.remember' => $request->boolean('remember'),
+            ]);
+
+            // Redirect to 2FA challenge page
+            return redirect()->route('two-factor.login');
+        }
+
+        // If no 2FA, log them in directly
+        Auth::login($user, $request->boolean('remember'));
+        $request->session()->regenerate();
+
+        // Redirect to landing page
         return redirect()->route('landing');
     }
 }
