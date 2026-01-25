@@ -1,13 +1,14 @@
-<div class="md:col-span-1 flex justify-between">
-    <div class="px-4 sm:px-0">
-        <h3 class="text-2xl font-display font-bold text-brew-brown">{{ $title }}</h3>
+<!-- Modern section title with cleaner typography -->
+<div class="flex justify-between mb-4">
+    <div>
+        <h3 class="text-xl font-semibold text-gray-900">{{ $title }}</h3>
 
-        <p class="mt-2 text-sm text-brew-brown/70 font-sans">
+        <p class="mt-1 text-sm text-gray-600">
             {{ $description }}
         </p>
     </div>
 
-    <div class="px-4 sm:px-0">
+    <div>
         {{ $aside ?? '' }}
     </div>
 </div>
