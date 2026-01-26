@@ -17,13 +17,17 @@
     <style>
         .font-display { font-family: 'Playfair Display', serif; }
         .font-sans { font-family: 'Inter', sans-serif; }
+        body {
+            background: linear-gradient(to bottom, #ffffff 0%, #fef7f0 20%, #ffffff 40%, #fef7f0 60%, #ffffff 80%, #fef7f0 100%);
+            background-attachment: fixed;
+        }
     </style>
 </head>
-<body class="bg-white" style="background: linear-gradient(to bottom, #ffffff 0%, #fef7f0 20%, #ffffff 40%, #fef7f0 60%, #ffffff 80%, #fef7f0 100%); background-attachment: fixed;">
+<body class="antialiased overflow-x-hidden">
     <x-header />
     <div class="w-full h-2" style="background: linear-gradient(to bottom, #3B2A2A 0%, transparent 100%);"></div>
 
-    <div class="container mx-auto px-4 pt-4">
+    <div class="container mx-auto px-4 pt-8 pb-12">
         @livewire('customer.message-form')
     </div>
 

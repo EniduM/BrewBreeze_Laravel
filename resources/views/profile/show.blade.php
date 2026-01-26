@@ -16,7 +16,10 @@
         .font-display { font-family: 'Playfair Display', serif; }
         .font-sans { font-family: 'Inter', sans-serif; }
         /* Modern soft background color */
-        body { background: #f9f6f3; }
+        body { 
+            background: linear-gradient(to bottom, #ffffff 0%, #fef7f0 20%, #ffffff 40%, #fef7f0 60%, #ffffff 80%, #fef7f0 100%);
+            background-attachment: fixed;
+        }
         @keyframes float-soft { from { transform: translateY(0); } to { transform: translateY(-10px); } }
         @keyframes fade-in-up { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
     </style>
@@ -152,44 +155,49 @@
         @if(session('status'))
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
                 <div class="bg-green-50 border-l-4 border-green-400 p-4 rounded-xl shadow-lg">
-                    <p class="text-green-700 font-sans">{{ session('status') }}</p>
+                    <div class="flex items-center">
+                        <svg class="w-5 h-5 text-green-400 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        <p class="text-green-700 font-sans font-medium">{{ session('status') }}</p>
+                    </div>
                 </div>
             </div>
         @endif
 
         <div class="container mx-auto px-4 py-12">
             <div class="max-w-7xl mx-auto">
-                <div class="mb-12">
-                    <h1 class="text-4xl md:text-5xl font-display font-bold text-brew-brown">My Profile</h1>
-                    <p class="mt-3 text-base text-brew-brown/70 font-sans">Manage your account settings and preferences</p>
+                <div class="mb-12 text-center md:text-left">
+                    <h1 class="text-4xl md:text-5xl font-display font-bold text-brew-brown mb-3">My Profile</h1>
+                    <p class="text-base text-brew-brown/70 font-sans">Manage your account settings and preferences</p>
                 </div>
 
                 <!-- Modern Card-Based Layout -->
                 <div class="space-y-6">
                     @if (Laravel\Fortify\Features::canUpdateProfileInformation())
-                        <div class="bg-white rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-200 overflow-hidden">
+                        <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
                             @livewire('profile.update-profile-information-form')
                         </div>
                     @endif
 
                     @if (Laravel\Fortify\Features::enabled(Laravel\Fortify\Features::updatePasswords()))
-                        <div class="bg-white rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-200 overflow-hidden">
+                        <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
                             @livewire('profile.update-password-form')
                         </div>
                     @endif
 
                     @if (Laravel\Fortify\Features::canManageTwoFactorAuthentication())
-                        <div class="bg-white rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-200 overflow-hidden">
+                        <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
                             @livewire('profile.two-factor-authentication-form')
                         </div>
                     @endif
 
-                    <div class="bg-white rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-200 overflow-hidden">
+                    <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
                         @livewire('profile.logout-other-browser-sessions-form')
                     </div>
 
                     @if (Laravel\Jetstream\Jetstream::hasAccountDeletionFeatures())
-                        <div class="bg-white rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-200 overflow-hidden">
+                        <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
                             @livewire('profile.delete-user-form')
                         </div>
                     @endif
