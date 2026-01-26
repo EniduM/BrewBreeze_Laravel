@@ -1,6 +1,10 @@
 # BrewBreeze - Coffee Subscription SaaS Platform
 
-A modern Laravel 12 application for managing coffee subscriptions, orders, and customer relationships.
+A modern Laravel 10 application for managing coffee subscriptions, orders, and customer relationships.
+
+[![Deploy to Azure](https://img.shields.io/badge/Deploy%20to-Azure-blue)](https://brew-breeze-app-gcdpfzedbzg4dkh2.canadacentral-01.azurewebsites.net)
+[![Laravel](https://img.shields.io/badge/Laravel-10-red)](https://laravel.com)
+[![PHP](https://img.shields.io/badge/PHP-8.3-blue)](https://php.net)
 
 ## Features
 
