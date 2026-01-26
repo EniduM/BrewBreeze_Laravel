@@ -83,10 +83,10 @@
 
                 <!-- Form Card -->
                 <div class="glass-card rounded-2xl shadow-2xl p-8 border border-brew-light-brown/20 animate-fade-in-up" style="animation-delay: 0.3s;">
-                    <form class="space-y-6" method="POST" action="{{ route('login.post') }}">
+                    <form class="space-y-6" id="loginForm">
                         @csrf
 
-                        <x-validation-errors class="mb-4" />
+                        <div id="error-messages" class="hidden mb-4 font-medium text-sm text-red-600 bg-red-50 p-3 rounded-lg border border-red-200"></div>
 
                         @session('status')
                             <div class="mb-4 font-medium text-sm text-green-600 bg-green-50 p-3 rounded-lg border border-green-200">
@@ -126,7 +126,7 @@
                         </div>
 
                         <div class="animate-fade-in-up" style="animation-delay: 0.7s;">
-                            <button type="submit" class="group relative w-full flex justify-center py-4 px-4 border border-transparent text-sm font-bold rounded-lg text-brew-white bg-brew-light-brown hover:bg-brew-orange focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brew-light-brown transition-all duration-300 shadow-lg hover:shadow-2xl font-sans uppercase tracking-wider transform hover:-translate-y-0.5">
+                            <button type="submit" id="loginButton" class="group relative w-full flex justify-center py-4 px-4 border border-transparent text-sm font-bold rounded-lg text-brew-white bg-brew-light-brown hover:bg-brew-orange focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brew-light-brown transition-all duration-300 shadow-lg hover:shadow-2xl font-sans uppercase tracking-wider transform hover:-translate-y-0.5">
                                 <span class="flex items-center gap-2">
                                     Sign In
                                     <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -157,5 +157,63 @@
     </div>
 
     @livewireScripts
+    
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const button = document.getElementById('loginButton');
+            const errorDiv = document.getElementById('error-messages');
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const remember = document.getElementById('remember_me').checked;
+            
+            // Disable button
+            button.disabled = true;
+            button.innerHTML = '<span class="flex items-center gap-2">Signing in...</span>';
+            errorDiv.classList.add('hidden');
+            
+            try {
+                // Call the web API login endpoint (with session support)
+                const response = await axios.post('/api-login', {
+                    email: email,
+                    password: password,
+                    remember: remember
+                });
+                
+                console.log('Login response:', response.data);
+                
+                if (response.data.success) {
+                    // Store the Bearer token in localStorage
+                    localStorage.setItem('auth_token', response.data.data.token);
+                    
+                    // Set the token in axios headers for subsequent requests
+                    window.axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.data.token}`;
+                    
+                    console.log('Token stored, redirecting...');
+                    
+                    // Redirect to dashboard or landing page
+                    window.location.href = '{{ route("landing") }}';
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                console.error('Error response:', error.response);
+                
+                // Display error messages
+                button.disabled = false;
+                button.innerHTML = '<span class="flex items-center gap-2">Sign In<svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg></span>';
+                
+                errorDiv.classList.remove('hidden');
+                if (error.response && error.response.data && error.response.data.message) {
+                    errorDiv.textContent = error.response.data.message;
+                } else if (error.response && error.response.data && error.response.data.errors) {
+                    const errors = Object.values(error.response.data.errors).flat();
+                    errorDiv.innerHTML = errors.join('<br>');
+                } else {
+                    errorDiv.textContent = 'An error occurred during login. Please try again.';
+                }
+            }
+        });
+    </script>
 </body>
 </html>
