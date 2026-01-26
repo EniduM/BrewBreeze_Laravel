@@ -29,49 +29,53 @@ class CustomerLoginController extends Controller
      */
     public function store(Request $request)
     {
-        // Store login route in session
-        $request->session()->put('login_route', 'customer');
-
         // Validate the request
         $request->validate([
-            Fortify::username() => 'required|string',
+            'email' => 'required|string|email',
             'password' => 'required|string',
         ]);
 
-        // Find the user by email/username
-        $user = \App\Models\User::where(Fortify::username(), $request->input(Fortify::username()))->first();
+        // Find the user by email
+        $user = \App\Models\User::where('email', $request->email)->first();
 
         // Check if user exists and password is correct
-        if (!$user || !\Hash::check($request->input('password'), $user->password)) {
-            throw ValidationException::withMessages([
-                Fortify::username() => [__('auth.failed')],
-            ]);
+        if (!$user || !\Hash::check($request->password, $user->password)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'The provided credentials are incorrect.',
+            ], 401);
         }
 
         // Verify the user is a customer
         if (!$user->isCustomer()) {
-            throw ValidationException::withMessages([
-                Fortify::username() => ['Please use the admin login page.'],
-            ]);
+            return response()->json([
+                'success' => false,
+                'message' => 'Please use the admin login page.',
+            ], 403);
         }
 
-        // Check if 2FA is enabled for this user
-        if ($user->two_factor_secret) {
-            // Store user ID in session for 2FA challenge
-            $request->session()->put([
-                'login.id' => $user->id,
-                'login.remember' => $request->boolean('remember'),
-            ]);
-
-            // Redirect to 2FA challenge page
-            return redirect()->route('two-factor.login');
-        }
-
-        // If no 2FA, log them in directly
+        // Log the user into the session
         Auth::login($user, $request->boolean('remember'));
         $request->session()->regenerate();
 
-        // Redirect to landing page
-        return redirect()->route('landing');
+        // Create Bearer token
+        $tokenName = 'auth-token-' . now()->timestamp;
+        $abilities = ['customer'];
+        $token = $user->createToken($tokenName, $abilities)->plainTextToken;
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Login successful',
+            'data' => [
+                'user' => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'role' => $user->role,
+                ],
+                'token' => $token,
+                'token_type' => 'Bearer',
+            ],
+        ], 200);
     }
 }
