@@ -27,6 +27,9 @@ Route::get('/login', [CustomerLoginController::class, 'showLoginForm'])->name('l
 Route::post('/login', [CustomerLoginController::class, 'store'])
     ->middleware(['web', 'throttle:login'])
     ->name('login.post');
+Route::post('/api-login', [CustomerLoginController::class, 'store'])
+    ->middleware(['web'])
+    ->name('api.login');
 
 // Admin Login Routes
 Route::get('/admin/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
