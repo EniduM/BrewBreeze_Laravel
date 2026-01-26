@@ -66,25 +66,25 @@ jobs:
       - name: Build frontend assets
         run: npm run build
 
-      - name: Create .htaccess for Azure
+      - name: Prepare Laravel for Azure
         run: |
-          cat > .htaccess << 'EOF'
-          <IfModule mod_rewrite.c>
-              RewriteEngine On
-              RewriteRule ^(.*)$ public/$1 [L]
-          </IfModule>
-          EOF
-
-      - name: Create deployment package
-        run: |
-          mkdir -p deployment
-          rsync -av --exclude='.git' --exclude='node_modules' --exclude='tests' --exclude='.env' --exclude='deployment' ./ deployment/
+          # Make startup script executable
+          chmod +x startup.sh
           
+          # Create storage directories
+          mkdir -p storage/framework/{sessions,views,cache}
+          mkdir -p storage/logs
+          chmod -R 775 storage bootstrap/cache
+
       - name: Upload artifact for deployment
         uses: actions/upload-artifact@v4
         with:
           name: laravel-app
-          path: deployment/
+          path: |
+            .
+            !.git
+            !node_modules
+            !tests
           retention-days: 1
 
   deploy:
@@ -99,12 +99,12 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: laravel-app
-          path: .
+          path: laravel-app
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
-        uses: azure/webapps-deploy@v3
+        uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          package: .
+          package: laravel-app
