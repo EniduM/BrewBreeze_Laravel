@@ -29,6 +29,9 @@ class CustomerLoginController extends Controller
      */
     public function store(Request $request)
     {
+        // Store login route in session
+        $request->session()->put('login_route', 'customer');
+
         // Validate the request
         $request->validate([
             'email' => 'required|string|email',
@@ -54,7 +57,26 @@ class CustomerLoginController extends Controller
             ], 403);
         }
 
-        // Log the user into the session
+        // Check if 2FA is enabled for this user
+        if ($user->two_factor_secret) {
+            // Store user ID in session for 2FA challenge
+            $request->session()->put([
+                'login.id' => $user->id,
+                'login.remember' => $request->boolean('remember'),
+            ]);
+
+            // Redirect to 2FA challenge page
+            return response()->json([
+                'success' => true,
+                'message' => '2FA required',
+                'data' => [
+                    'requires_2fa' => true,
+                    'redirect' => route('two-factor.login'),
+                ],
+            ], 200);
+        }
+
+        // If no 2FA, log them in directly
         Auth::login($user, $request->boolean('remember'));
         $request->session()->regenerate();
 

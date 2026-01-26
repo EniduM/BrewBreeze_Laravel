@@ -184,6 +184,13 @@
                 console.log('Login response:', response.data);
                 
                 if (response.data.success) {
+                    // Check if 2FA is required
+                    if (response.data.data.requires_2fa) {
+                        console.log('2FA required, redirecting...');
+                        window.location.href = response.data.data.redirect;
+                        return;
+                    }
+                    
                     // Store the Bearer token in localStorage
                     localStorage.setItem('auth_token', response.data.data.token);
                     

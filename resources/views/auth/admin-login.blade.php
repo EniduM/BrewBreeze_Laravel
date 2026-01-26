@@ -79,13 +79,6 @@
                 </div>
 
                 <div class="glass-card rounded-2xl shadow-2xl p-8 border border-brew-light-brown/20 space-y-6 animate-fade-in-up" style="animation-delay: 0.3s;">
-                    <div class="bg-red-50 border border-red-200 rounded-lg p-4 animate-slide-in-right" style="animation-delay: 0.35s;">
-                        <p class="text-sm font-bold text-red-800 mb-1">Admin Access Only</p>
-                        <p class="text-xs text-red-700 mb-1">Demo account</p>
-                        <p class="text-xs text-red-700">Email: admin@brewbreeze.com</p>
-                        <p class="text-xs text-red-700">Password: password</p>
-                    </div>
-
                     <form class="space-y-6" method="POST" action="{{ route('admin.login.post') }}">
                         @csrf
 

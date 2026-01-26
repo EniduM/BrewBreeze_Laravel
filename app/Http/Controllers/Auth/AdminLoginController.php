@@ -55,8 +55,8 @@ class AdminLoginController extends Controller
             ]);
         }
 
-        // Check if 2FA is enabled for this user
-        if ($user->two_factor_secret) {
+        // Check if 2FA is enabled and confirmed for this user
+        if ($user->two_factor_secret && $user->two_factor_confirmed_at) {
             // Store user ID in session for 2FA challenge
             $request->session()->put([
                 'login.id' => $user->id,
