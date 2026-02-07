@@ -37,7 +37,7 @@ Route::prefix('v1')->group(function () {
         Route::post('/logout', [AuthController::class, 'logout']);
 
         // Products - accessible to all authenticated users
-        Route::get('/products', [ProductController::class, 'index']);
+        //Route::get('/products', [ProductController::class, 'index']);
 
         // Cart - requires customer scope
         Route::post('/cart', [CartController::class, 'store'])
