@@ -19,6 +19,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// PUBLIC (no auth) - for mobile SSP
+Route::get('/v1/products', [ProductController::class, 'index']);
+Route::get('/v1/products/{product}', [ProductController::class, 'show']);
+
+
 // API Version 1
 Route::prefix('v1')->group(function () {
     // Public routes with rate limiting (60 requests per minute)
